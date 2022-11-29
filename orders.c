@@ -201,13 +201,15 @@ void ordersRoutine(FILE *file){
     char verify = 0;
     FILE *clients = getClients();
     FILE *products = getProducts();
+    int clientsCount = countClients(clients);
+    int productsCount = countProducts(products);
 
 
     while(1){
         system("CLS");
         printf("-----PEDIDOS-----\n");
         printf("\nSelecione a opcao desejada:\n");
-        if(countClients(clients) > 0 && countProducts(products) > 0){
+        if(clientsCount > 0 &&  productsCount > 0){
              printf("[1] Adicionar registro:\n");
         }
 
