@@ -11,6 +11,14 @@ typedef struct{
     int value;
 }Product;
 
+// PEDIDOS
+typedef struct{
+    int id;
+    int client_id;
+    int product_id;
+    int qtt;
+}Order;
+
 FILE* getProducts();
 int countProducts(FILE *file);
 void appendProduct(FILE *file);
@@ -18,46 +26,13 @@ void showProducts(FILE *file);
 int getLastId(FILE *file);
 void productRoutine(FILE *file);
 FILE *deleteProduct(FILE *file);
+int countOrders(FILE *file);
 // FIM PRODUTO
 
 int main(int argc, const char * argv[])
 {
     FILE *productsFile = getProducts();
-    productRoutine(productsFile);   
-    // char opt;
-
-    // while(1){
-    //     system("CLS");
-    //     printf("\n\nDigite a opcao que deseja:\n");
-    //     printf("[1] - Produtos\n");
-    //     printf("[2] - Clientes\n");
-    //     printf("[3] - Pedidos\n");
-    //     printf("[4] - Sair\n");
-    //     while(1){
-    //         opt = getch();
-    //         if(opt >= 48 && opt <= 57)
-    //             break;
-    //     }
-    //     switch(opt){
-    //         case '1':
-    //             productRoutine(productsFile);
-    //             break;
-    //         case '2':
-    //             printf("Rotina de clientes!");
-    //             break;
-    //         case '3':
-    //             printf("Rotina de Pedidos");
-    //             break;
-    //         case '4':
-    //             fclose(productsFile);
-    //             return 0;
-    //             break;
-    //         default:
-    //             printf("Opcao invalida!");
-    //             break;
-    //     }
-    // }
-   
+    productRoutine(productsFile);      
 }
 
 FILE* getProducts(){
@@ -164,9 +139,10 @@ void productRoutine(FILE *file){
     }  
 }
 FILE *deleteProduct(FILE *file){
+
     int qtt = countProducts(file);
     Product products[qtt];
-    int i;
+    int i, error;
     int productId,found;
     char confirm;
     fseek(file,0,SEEK_SET);
@@ -175,6 +151,7 @@ FILE *deleteProduct(FILE *file){
     }
     while(1){
         found = -1;
+        error = -1;
         system("CLS");
         showProducts(file);
         printf("Digite o ID para excluir:\n");
@@ -185,37 +162,63 @@ FILE *deleteProduct(FILE *file){
                 break;
             }
         }
-        if(found != -1){
-            printf("Tem certeza que deseja excluir esse registro?(S/N)");
-            while(1){
-                confirm = getch();
-                if(confirm == 's' || confirm == 'S' || confirm == 'N' || confirm == 'n')
-                    break;
+        FILE *orders;
+        orders = fopen("Orders.dat", "r");
+        Order order;
+        int count = countOrders(orders);
+        if(orders == NULL){
+            error = 1;
+        }
+        
+        fseek(orders,0,SEEK_SET);
+        for( i = 0; i < count; i++){
+            fread(&order,sizeof(Order),1,orders);
+            if(productId == order.product_id){
+                error = 1;
             }
-            if(confirm == 's' || confirm == 'S'){
-                for(i = found; i < qtt-1; i++){
-                    products[i] = products[i+1];
-                }
-                qtt--;
-                fclose(file);
-                file = fopen("Products.dat","w");
-                fwrite(&products,sizeof(Product),qtt,file);
-                fclose(file);
-                printf("\n\nRegistro deletado com sucesso!\n");
-                return getProducts();
-            }
-
+        }
+        if(error == 1){
+            printf("\n\nImpossivel deletar, ja existe um pedido com esse Produto.\nPrimeiro exclua esse pedido! ");
         }else{
-            printf("\n\nRegistro nao encontrado...\nDeseja realmente excluir um registro? (S/N)");
-             while(1){
-                confirm = getch();
-                if(confirm == 's' || confirm == 'S' || confirm == 'N' || confirm == 'n'){
-                    if(confirm == 'n' || confirm == 'N'){
-                        return getProducts();
+
+            if(found != -1){
+                printf("Tem certeza que deseja excluir esse registro?(S/N)");
+                while(1){
+                    confirm = getch();
+                    if(confirm == 's' || confirm == 'S' || confirm == 'N' || confirm == 'n')
+                        break;
+                }
+                if(confirm == 's' || confirm == 'S'){
+                    for(i = found; i < qtt-1; i++){
+                        products[i] = products[i+1];
                     }
-                    break;
+                    qtt--;
+                    fclose(file);
+                    file = fopen("Products.dat","w");
+                    fwrite(&products,sizeof(Product),qtt,file);
+                    fclose(file);
+                    printf("\n\nRegistro deletado com sucesso!\n");
+                    return getProducts();
+                }
+
+            }else{
+                printf("\n\nRegistro nao encontrado...\nDeseja realmente excluir um registro? (S/N)");
+                while(1){
+                    confirm = getch();
+                    if(confirm == 's' || confirm == 'S' || confirm == 'N' || confirm == 'n'){
+                        if(confirm == 'n' || confirm == 'N'){
+                            return getProducts();
+                        }
+                        break;
+                    }
                 }
             }
         }
+        return getProducts();
     }
+}
+
+int countOrders(FILE *file){
+    fseek(file, 0, SEEK_END);
+    return ftell(file) / sizeof(Order);
 }
