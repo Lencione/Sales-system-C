@@ -3,7 +3,9 @@
 #include <conio.h>
 #include <string.h>
 
-// PRODUTO
+/**
+ * @brief Creating Product struct
+ */
 typedef struct{
     int id;
     char name[20];
@@ -11,7 +13,9 @@ typedef struct{
     int value;
 }Product;
 
-// PEDIDOS
+/**
+ * @brief Creating Order struct
+ */
 typedef struct{
     int id;
     int client_id;
@@ -19,16 +23,69 @@ typedef struct{
     int qtt;
 }Order;
 
+/**
+ * @brief Get the Products object
+ * 
+ * @return FILE* 
+ */
 FILE* getProducts();
-int countProducts(FILE *file);
-void appendProduct(FILE *file);
-void showProducts(FILE *file);
-int getLastId(FILE *file);
-void productRoutine(FILE *file);
-FILE *deleteProduct(FILE *file);
-int countOrders(FILE *file);
-// FIM PRODUTO
 
+/**
+ * @brief Get the Products object count
+ * 
+ * @param file: pointer to Product file
+ * @return count: int
+ */
+int countProducts(FILE *file);
+
+/**
+ * @brief Append new object to Product File
+ * 
+ * @param file: pointer to Product file
+ */
+void appendProduct(FILE *file);
+
+/**
+ * @brief Show Products list
+ * 
+ * @param file: pointer to Product file
+ */
+void showProducts(FILE *file);
+
+/**
+ * @brief Get the Last Id of Product File
+ * 
+ * @param file: pointer to Product file
+ * @return last id of Product File + 1
+ */
+int getLastId(FILE *file);
+
+/**
+ * @brief Starts a routine of Product CRUD 
+ * 
+ * @param file: pointer to Product file
+ */
+void productRoutine(FILE *file);
+
+/**
+ * @brief Delete object of a Product File
+ * 
+ * @param file: pointer to Product file
+ * @return FILE* instance of a Product file
+ */
+FILE *deleteProduct(FILE *file);
+
+/**
+ * @brief Get the Orders object count
+ * 
+ * @param file: pointer to Orders file
+ * @return int 
+ */
+int countOrders(FILE *file);
+
+/**
+ * @brief Main function
+ */
 int main(int argc, const char * argv[])
 {
     FILE *productsFile = getProducts();

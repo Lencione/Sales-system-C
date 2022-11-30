@@ -4,8 +4,10 @@
 #include <string.h>
 #include <unistd.h>
 
-
-// PRODUTO
+/**
+ * @brief Create Product Struct
+ * 
+ */
 typedef struct{
     int id;
     char name[20];
@@ -13,25 +15,79 @@ typedef struct{
     int value;
 }Product;
 
+/**
+ * @brief Get the Products object
+ * 
+ * @return FILE* with pointer to Product File
+ */
 FILE* getProducts();
+
+/**
+ * @brief Get the Product object
+ * 
+ * @return Product 
+ */
 Product getProduct();
+
+/**
+ * @brief Get the Product object count
+ * 
+ * @param file: pointer to Product file
+ * @return count: int
+ */
 int countProducts(FILE *file);
+
+/**
+ * @brief Show Products list
+ * 
+ * @param file: ponter to Product file
+ */
 void showProducts(FILE *file);
 
 
-// CLIENTE
+/**
+ * @brief Create Client Struct
+ */
 typedef struct{
     int id;
     char name[20];
     int age;
 }Client;
 
+/**
+ * @brief Get the Clients object
+ * 
+ * @return FILE*
+ */
 FILE* getClients();
+
+/**
+ * @brief Get the Clients object count
+ * 
+ * @param file: pointer to Client file
+ * @return count: int
+ */
 int countClients(FILE *file);
+
+/**
+ * @brief Show clients list
+ * 
+ * @param file: pointer to Client file
+ */
 void showClients(FILE *file);
+
+/**
+ * @brief Get the Client object
+ * 
+ * @param clientParamId: -1 to show and get Client on file
+ *                        id to search Client on file
+ * @return Client 
+ */
 Client getClient(int clientParamId);
 
-// PEDIDOS
+/**
+ * @brief Create Order struct
+ */
 typedef struct{
     int id;
     int client_id;
@@ -39,12 +95,56 @@ typedef struct{
     int qtt;
 }Order;
 
+/**
+ * @brief Get the Orders object
+ * 
+ * @return FILE* 
+ */
 FILE* getOrders();
+
+/**
+ * @brief Get the Orders object count
+ * 
+ * @param file: pointer to Order file
+ * @return count: int
+ */
 int countOrders(FILE *file);
+
+/**
+ * @brief Get the Orders object list
+ * 
+ * @param file: pointer to Order File
+ */
 void showOrders(FILE *file);
+
+/**
+ * @brief Starts a routine of Order CRUD 
+ * 
+ * @param file: pointer to Order file
+ */
 void ordersRoutine(FILE *file);
+
+/**
+ * @brief Append new object to Order File
+ * 
+ * @param file: pointer to Order file
+ */
 void appendOrder(FILE *file);
+
+/**
+ * @brief Get the Last Id of Order File
+ * 
+ * @param file: pointer to Order file
+ * @return last id of Order File + 1
+ */
 int getLastId(FILE *file);
+
+/**
+ * @brief Delete object of a Order File
+ * 
+ * @param file: pointer to Order file
+ * @return FILE* instance of a Order file
+ */
 FILE *deleteOrder(FILE *file);
 
 // MAIN
@@ -211,6 +311,8 @@ void ordersRoutine(FILE *file){
         printf("\nSelecione a opcao desejada:\n");
         if(clientsCount > 0 &&  productsCount > 0){
              printf("[1] Adicionar registro:\n");
+        }else{
+            printf("\n\nATENCAO: Nao existem Produtos ou Clientes cadastrados\nCadastre um e tente novamente:\n\n");
         }
 
         if(countOrders(file) > 0){

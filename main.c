@@ -1,7 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+/**
+ * @brief   Projeto Vendas, utilizando arquivos.
+ *          PT-BR: 
+ *          Programa que através de arquivo realiza um CRUD (Create, Read, Update, Delete)
+ *          em arquivos com dados referente a simulação de uma venda de um produto.
+ *          Nesse arquivo chamado "main", o programa simplesmente realiza a chamada de outros
+ *          programas já compilados.
+ *          Demais documentações encontram-se antes do prototipo das funções nos arquivos de cada programa.
+ * 
+ * @authors: 
+ *          Wesley Lencione de Oliveira     RA 12225140
+ *          Lucas Pianelli Andreotti        RA 12225225
+ *          Vinicius Campos Ferreira        RA 12224916
+ */
 int main(){
      char opt;
 

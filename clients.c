@@ -3,14 +3,18 @@
 #include <conio.h>
 #include <string.h>
 
-// PRODUTO
+/**
+ * @brief Creating Cient struct
+ */
 typedef struct{
     int id;
     char name[20];
     int age;
 }Client;
 
-// PEDIDOS
+/**
+ * @brief Creating Order struct
+ */
 typedef struct{
     int id;
     int client_id;
@@ -18,16 +22,69 @@ typedef struct{
     int qtt;
 }Order;
 
+/**
+ * @brief Get the Clients object
+ * 
+ * @return FILE*
+ */
 FILE* getClients();
-int countClients(FILE *file);
-void appendClient(FILE *file);
-void showClients(FILE *file);
-int getLastId(FILE *file);
-void clientRoutine(FILE *file);
-FILE *deleteClient(FILE *file);
-int countOrders(FILE *file);
-// FIM PRODUTO
 
+/**
+ * @brief Get the Clients object count
+ * 
+ * @param file: pointer to Client file
+ * @return count: int
+ */
+int countClients(FILE *file);
+
+/**
+ * @brief Append new object to Client File
+ * 
+ * @param file: pointer to Client file
+ */
+void appendClient(FILE *file);
+
+/**
+ * @brief Show clients list
+ * 
+ * @param file: pointer to Client file
+ */
+void showClients(FILE *file);
+
+/**
+ * @brief Get the Last Id of Client File
+ * 
+ * @param file: pointer to Client file
+ * @return last id of Client File + 1
+ */
+int getLastId(FILE *file);
+
+/**
+ * @brief Starts a routine of CRUD 
+ * 
+ * @param file: pointer to Client file
+ */
+void clientRoutine(FILE *file);
+
+/**
+ * @brief Delete object of a Client File
+ * 
+ * @param file: pointer to Client file
+ * @return FILE* instance of a Client file
+ */
+FILE *deleteClient(FILE *file);
+
+/**
+ * @brief Get the Orders object count
+ * 
+ * @param file: pointer to Orders file
+ * @return int 
+ */
+int countOrders(FILE *file);
+
+/**
+ * @brief Main function
+ */
 int main(int argc, const char * argv[])
 {
     FILE *clientFile = getClients();
