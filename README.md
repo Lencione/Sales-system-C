@@ -8,6 +8,8 @@
 - products.c
 - orders.c
 
+**Em seguida, executar o arquivo MAIN.EXE**
+
 ## 🎯 Arquivo Main:
 **Ao executar o arquivo main, o usuário terá 4 opções:**
 
