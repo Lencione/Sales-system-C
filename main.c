@@ -14,6 +14,8 @@
  *          Wesley Lencione de Oliveira     RA 12225140
  *          Lucas Pianelli Andreotti        RA 12225225
  *          Vinicius Campos Ferreira        RA 12224916
+ * 
+ * @github: https://github.com/Lencione/Sales-system-C      
  */
 int main(){
      char opt;
